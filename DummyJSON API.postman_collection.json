@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "f678b7fc-1185-4f47-9078-30ce7f8fe1aa",
+		"name": "DummyJSON API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44049304",
+		"_collection_link": "https://torres-1763317.postman.co/workspace/c766e768-f8ce-4b85-8804-041dbdd08b4c/collection/44049304-f678b7fc-1185-4f47-9078-30ce7f8fe1aa?action=share&source=collection_link&creator=44049304"
+	},
+	"item": [
+		{
+			"name": "Get products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Pet Test Product\",\r\n  \"description\": \"API Testing Dummy Product\",\r\n  \"price\": 999\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/products/add",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Price",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"price\": 888\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/products/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit & Skip",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products?limit=5&skip=10",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "skip",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Validation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Поле title — строка\", function () {\r",
+							"    let json = pm.response.json();\r",
+							"    pm.expect(json.title).to.be.a(\"string\");\r",
+							"    pm.expect(json.title.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Поле price — число > 0\", function () {\r",
+							"    let json = pm.response.json();\r",
+							"    pm.expect(json.price).to.be.a(\"number\");\r",
+							"    pm.expect(json.price).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Поле description — строка\", function () {\r",
+							"    let json = pm.response.json();\r",
+							"    pm.expect(json.description).to.be.a(\"string\");\r",
+							"    pm.expect(json.description.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/products/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Non-existent ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/99999",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"99999"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
